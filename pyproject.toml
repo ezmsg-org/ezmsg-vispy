@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "ezmsg-vispy"
+version = "0.1.0"
+description = "Visualization tools for ezmsg using the vispy library."
+authors = ["Peranich, Preston <pperanich@gmail.com>"]
+license = "LICENSE.txt"
+readme = "README.md"
+packages = [{ include = "ezmsg/vispy" }]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+ezmsg = "^3.3.3"
+qdarkstyle = "^3.2.1"
+pyqt6 = "^6.6.0"
+numpy = "^1.26.2"
+vispy = "^0.14.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
