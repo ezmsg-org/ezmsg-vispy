@@ -10,9 +10,9 @@ packages = [{ include = "ezmsg", from = "src" }]
 [tool.poetry.dependencies]
 python = "^3.8"
 ezmsg = "^3.3.3"
+numpy = "^1.19.5"
 qdarkstyle = "^3.2.1"
 pyqt6 = "^6.6.0"
-numpy = "^1.26.2"
 vispy = "^0.14.1"
 
 
