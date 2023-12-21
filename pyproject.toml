@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "ezmsg-vispy"
-version = "0.1.0"
+version = "0.1.1"
 description = "Visualization tools for ezmsg using the vispy library."
 authors = ["Peranich, Preston <pperanich@gmail.com>"]
-license = "LICENSE.txt"
+license = "MIT"
 readme = "README.md"
-packages = [{ include = "ezmsg/vispy" }]
+packages = [{ include = "ezmsg", from = "src" }]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 ezmsg = "^3.3.3"
 qdarkstyle = "^3.2.1"
 pyqt6 = "^6.6.0"
