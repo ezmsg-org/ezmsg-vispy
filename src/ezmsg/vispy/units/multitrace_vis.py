@@ -79,9 +79,9 @@ class MultiTraceVis(PlotVis):
                 trace is None
                 or trace.ch_names != ch_names
                 or trace.fs != fs
-                # or (
-                #     trace.x_arr is not None and x_arr is not None and trace.x_arr.shape != x_arr.shape
-                # )
+                or (
+                    trace.x_arr is not None and x_arr is not None and trace.x_arr.shape != x_arr.shape
+                )
             ):
                 trace = MultiTraceData(data, fs, x_arr, trace_name, ch_names, units)
             else:
