@@ -3,6 +3,7 @@ import asyncio
 import logging
 import pickle
 import socket
+import signal
 
 from dataclasses import field
 from typing import List, Optional, AsyncGenerator, Dict, Any
@@ -47,6 +48,8 @@ class SimpleApplication(ez.Unit):
 
     @ez.main
     def run_visuals(self) -> None:
+        # Setup signal handling for Ctrl-C
+        signal.signal(signal.SIGINT, signal_handler)
         self.STATE.app = QtWidgets.QApplication([])
 
         # Window
@@ -73,7 +76,9 @@ class SimpleApplication(ez.Unit):
             self.STATE.timer.stop()
         else:
             for visual in self.visuals:
-                visual.stop()
+                visual.STATE.timer.stop()
+
+        self.STATE.app.quit()
         raise ez.NormalTermination
 
     def shutdown(self) -> None:
@@ -159,6 +164,8 @@ class Application(ez.Unit):
 
     @ez.main
     def run_visuals(self) -> None:
+        # Setup signal handling for Ctrl-C
+        signal.signal(signal.SIGINT, signal_handler)
         self.STATE.app = QtWidgets.QApplication([])
 
         # Window
@@ -188,7 +195,8 @@ class Application(ez.Unit):
             self.STATE.timer.stop()
         else:
             for visual in self.visuals.values():
-                visual.stop()
+                visual.STATE.timer.stop()
+        self.STATE.app.quit()
         raise ez.NormalTermination
 
     def shutdown(self) -> None:
@@ -202,3 +210,8 @@ class Application(ez.Unit):
     def update(self) -> None:
         for visual in self.visuals.values():
             visual.update()
+
+
+def signal_handler(sig, frame):
+    """Handle the interrupt signal and close the application."""
+    QtWidgets.QApplication.instance().quit()
