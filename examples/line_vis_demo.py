@@ -13,10 +13,11 @@ from frontends.line_vis_frontend import LineVisFrontend, WaveformCfgMessage
 
 logger = logging.getLogger(__name__)
 
+
 def sawtooth(fsig, t):
     fs = 1.0 / np.mean(np.diff(t))
     tsig = 1.0 / fsig
-    duration = (t.shape[0] / fs)
+    duration = t.shape[0] / fs
     periods_in_duration = int(np.ceil(duration / tsig))
     samples_per_period = int(np.ceil(tsig * fs))
     sawtooth_period = np.linspace(1.0, -1.0, samples_per_period)
@@ -24,6 +25,7 @@ def sawtooth(fsig, t):
     samples_in_duration = int(np.ceil(duration * fs))
     waveform = tiled_sawtooth[:samples_in_duration]
     return waveform
+
 
 @dataclass
 class WaveformMessage:
@@ -49,7 +51,6 @@ class WaveformState(ez.State):
 
 
 class WaveformGenerator(ez.Unit):
-
     SETTINGS: WaveformSettings
     STATE: WaveformState
 
@@ -117,8 +118,10 @@ class WaveformGenerator(ez.Unit):
             self.STATE.y = np.sin(2 * np.pi * self.STATE.fsig * self.STATE.t)
         elif self.STATE.waveform_type == "sawtooth":
             self.STATE.y = sawtooth(self.STATE.fsig, self.STATE.t)
-        self.STATE.fft_vals = np.fft.fft(self.STATE.y)
-        self.STATE.freqs = np.fft.fftfreq(self.STATE.y.size) * self.SETTINGS.fs
+        self.STATE.fft_vals = np.fft.fftshift(np.fft.fft(self.STATE.y))
+        self.STATE.freqs = (
+            np.fft.fftshift(np.fft.fftfreq(self.STATE.y.size)) * self.SETTINGS.fs
+        )
         data = np.empty(shape=(len(self.STATE.fft_vals), 2))
         data[:, 0] = self.STATE.freqs
         data[:, 1] = np.abs(self.STATE.fft_vals)
@@ -194,13 +197,11 @@ class LineApp(ez.Collection):
 
 
 class LineVisDemo(ez.Collection):
-
     WAVEFORM_GENERATOR = WaveformGenerator()
 
     LINE_APP = LineApp()
 
     def configure(self) -> None:
-
         self.WAVEFORM_GENERATOR.apply_settings(WaveformSettings())
 
     # Define Connections
