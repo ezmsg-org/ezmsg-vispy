@@ -542,7 +542,7 @@ class MultiTraceWidget(BasePlotWidget):
                 else:
                     raise Exception
             # Set limits on the camera
-            rect = (x_arr[0], 0, x_arr[-1], self.WINDOW_HEIGHT)
+            rect = (x_arr[0], 0, x_arr[-1] - x_arr[0], self.WINDOW_HEIGHT)
             self.view.camera.limits = rect
             self.view.camera.rect = rect
 
