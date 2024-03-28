@@ -8,20 +8,33 @@
 #   with-sources: false
 
 -e file:.
+cfgv==3.4.0
+    # via pre-commit
+distlib==0.3.8
+    # via virtualenv
 ezmsg==3.3.4
     # via ezmsg-vispy
+filelock==3.13.3
+    # via virtualenv
 freetype-py==2.4.0
     # via vispy
 hsluv==5.0.4
     # via vispy
+identify==2.5.35
+    # via pre-commit
 kiwisolver==1.4.5
     # via vispy
+nodeenv==1.8.0
+    # via pre-commit
 numpy==1.26.4
     # via ezmsg-vispy
     # via vispy
 packaging==24.0
     # via qtpy
     # via vispy
+platformdirs==4.2.0
+    # via virtualenv
+pre-commit==3.7.0
 pyopengl==3.1.7
     # via ezmsg-vispy
 pyqt6==6.6.1
@@ -30,11 +43,17 @@ pyqt6-qt6==6.6.2
     # via pyqt6
 pyqt6-sip==13.6.0
     # via pyqt6
+pyyaml==6.0.1
+    # via pre-commit
 qdarkstyle==3.2.3
     # via ezmsg-vispy
 qtpy==2.4.1
     # via qdarkstyle
+setuptools==69.2.0
+    # via nodeenv
 typing-extensions==4.10.0
     # via ezmsg
+virtualenv==20.25.1
+    # via pre-commit
 vispy==0.14.2
     # via ezmsg-vispy
