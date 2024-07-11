@@ -1,13 +1,15 @@
-import numpy as np
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 from dataclasses import dataclass
+
+import numpy as np
 
 # Module specific imports
 import ezmsg.core as ez
 from ezmsg.util.rate import Rate
-
-from ezmsg.vispy.units.application import SimpleApplication, SimpleApplicationSettings
-from ezmsg.vispy.units.image_vis import ImageVis, ImageVisSettings
+from ezmsg.vispy.units.application import SimpleApplication
+from ezmsg.vispy.units.application import SimpleApplicationSettings
+from ezmsg.vispy.units.image_vis import ImageVis
+from ezmsg.vispy.units.image_vis import ImageVisSettings
 
 
 @dataclass
@@ -25,7 +27,6 @@ class ImageState(ez.State):
 
 
 class ImageGenerator(ez.Unit):
-
     SETTINGS: ImageSettings
     STATE: ImageState
 
@@ -82,13 +83,11 @@ class ImageApp(ez.Collection):
 
 
 class ImageVisDemo(ez.Collection):
-
     IMAGE_GENERATOR = ImageGenerator()
 
     IMAGE_APP = ImageApp()
 
     def configure(self) -> None:
-
         self.IMAGE_GENERATOR.apply_settings(
             ImageSettings(
                 fs=1e2,

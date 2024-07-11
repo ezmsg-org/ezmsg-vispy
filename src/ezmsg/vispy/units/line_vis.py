@@ -1,11 +1,17 @@
+from typing import Any
+from typing import Optional
+from typing import Tuple
+from typing import Union
+
+import numpy as np
+
 import ezmsg.core as ez
 from ezmsg.util.messages.axisarray import AxisArray
-import numpy as np
-from typing import Any, Optional, Tuple, Union
-from PyQt6 import QtCore
 
-from .plot_vis import PlotVisState, PlotVisSettings, PlotVis
 from ..widgets.line_widget import LineWidget
+from .plot_vis import PlotVis
+from .plot_vis import PlotVisSettings
+from .plot_vis import PlotVisState
 
 
 # LINE PLOT

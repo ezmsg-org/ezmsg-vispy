@@ -1,10 +1,15 @@
 import asyncio
+from dataclasses import asdict
+from dataclasses import field
+from typing import Any
+from typing import List
+from typing import Optional
+
+from qtpy import QtCore
+from qtpy import QtWidgets
+
 import ezmsg.core as ez
 from ezmsg.util.messagegate import GateMessage
-from functools import partial
-from typing import Any, Optional, List
-from PyQt6 import QtCore, QtWidgets
-from dataclasses import asdict, field
 
 from ..helpers.constants import TIMER_INTERVAL
 

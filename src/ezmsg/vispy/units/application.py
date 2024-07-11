@@ -1,17 +1,24 @@
-import ezmsg.core as ez
 import asyncio
 import logging
 import pickle
-import socket
 import signal
-
+import socket
+from collections.abc import AsyncGenerator
 from dataclasses import field
-from typing import List, Optional, AsyncGenerator, Dict, Any
-from PyQt6 import QtCore, QtWidgets
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
 
-from .plot_vis import PlotVis
+from qtpy import QtCore
+from qtpy import QtWidgets
+
+import ezmsg.core as ez
+
 from ..frontends.main_window import EzWindowMeta
-from ..helpers.constants import UINT64_SIZE, BYTEORDER
+from ..helpers.constants import BYTEORDER
+from ..helpers.constants import UINT64_SIZE
+from .plot_vis import PlotVis
 
 logger = logging.getLogger(__name__)
 

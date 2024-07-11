@@ -1,9 +1,12 @@
 import logging
-from PyQt6 import QtWidgets, QtCore
-from typing import Union, Optional
 from dataclasses import dataclass
-from vispy import scene
+from typing import Optional
+from typing import Union
 
+from qtpy import QtCore
+from qtpy import QtWidgets
+
+from vispy import scene
 from vispy.visuals import ColorBarVisual
 
 ColorBarVisual.text_padding_factor = 1.6
@@ -84,7 +87,7 @@ class BasePlotWidget(QtWidgets.QWidget):
     xaxis: Union[QtWidgets.QWidget, scene.AxisWidget]
     yaxis: Union[QtWidgets.QWidget, scene.AxisWidget]
 
-    visibility_change_ev = QtCore.pyqtSignal(bool)
+    visibility_change_ev = QtCore.Signal(bool)
 
     def __init__(
         self,

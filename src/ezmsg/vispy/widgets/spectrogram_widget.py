@@ -1,10 +1,13 @@
-import numpy as np
-from PyQt6 import QtWidgets
-from typing import Any, Dict, Optional, Tuple, Union
-from vispy import scene, color
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
-from .plot_widget import BasePlotWidget
+import numpy as np
+
+from vispy import scene
+
 from ..helpers.ranged_pan_zoom import RangedPanZoomCamera
+from .plot_widget import BasePlotWidget
 
 
 class SpectrogramWidget(BasePlotWidget):
@@ -54,7 +57,7 @@ class SpectrogramWidget(BasePlotWidget):
         cmap="cubehelix",
         clim="auto",
         *args,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(*args, **kwargs)
 

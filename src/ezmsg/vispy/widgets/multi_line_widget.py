@@ -1,14 +1,16 @@
+import logging
+
 import numpy as np
-from PyQt6 import QtWidgets
+from qtpy import QtWidgets
+
 from vispy import scene
 
-from ..helpers.axis_widgets import create_yaxes, create_ylabels
+from ..helpers.axis_widgets import create_yaxes
+from ..helpers.axis_widgets import create_ylabels
 from ..helpers.channel_magnification import ChannelFocusTransform
-from ..helpers.ranged_pan_zoom import RangedPanZoomCamera
 from ..helpers.constants import LINE_COLORS
+from ..helpers.ranged_pan_zoom import RangedPanZoomCamera
 from .base_plot_widget import BasePlotWidget
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +19,7 @@ logger = logging.getLogger(__name__)
 Deprecated: This class is no longer recommended for use.
 Please consider using the MultiTraceWidget class instead.
 """
+
 
 class MultiLineWidget(BasePlotWidget):
     def __init__(
