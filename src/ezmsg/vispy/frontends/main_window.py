@@ -18,7 +18,7 @@ from ..helpers.constants import UINT64_SIZE
 logging.getLogger("qdarkstyle").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
-PYQT_SLOT = Union[Callable[..., None], QtCore.Signal]
+PYQT_SLOT = Union[Callable[..., None], QtCore.SignalInstance]
 
 
 def merge(a, b, path=None):
