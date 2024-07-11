@@ -5,13 +5,11 @@ from pathlib import Path
 
 from qtpy import QtGui
 from qtpy import QtWidgets
+from qtpy.uic import loadUi
 
 from ezmsg.vispy.frontends.main_window import EzMainWindow
 from ezmsg.vispy.frontends.main_window import register_command
 from ezmsg.vispy.frontends.main_window import register_response
-
-sys.path.append(str(Path(__file__).parent))
-from ui_line_vis_frontend import Ui_AppWindow
 
 logger = logging.getLogger(__name__)
 
@@ -23,14 +21,14 @@ class WaveformCfgMessage:
     start: bool
 
 
-class LineVisFrontend(EzMainWindow, Ui_AppWindow):
+class LineVisFrontend(EzMainWindow):
     ez_frequency_dial: QtWidgets.QDial
     ez_waveform_type: QtWidgets.QComboBox
     ez_start_btn: QtWidgets.QPushButton
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.setupUi(self)
+        loadUi(__file__.replace(".py", ".ui"), self)
 
         self.ez_waveform_type.addItem(QtGui.QIcon("resources/sine.png"), "sine")
         self.ez_waveform_type.addItem(QtGui.QIcon("resources/triangle.png"), "sawtooth")
