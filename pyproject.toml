@@ -1,6 +1,6 @@
 [project]
 name = "ezmsg-vispy"
-version = "0.2.0"
+version = "0.3.0"
 license = { file = "LICENSE.txt" }
 readme = "README.md"
 requires-python = ">=3.9"
@@ -13,8 +13,9 @@ dependencies = [
   "qtpy>=2.4.1",
 ]
 
-[tool]
-rye = { dev-dependencies = ["pre-commit>=3.7.0"] }
+[tool.rye]
+dev-dependencies = ["pre-commit>=3.7.0"]
+universal = true
 
 [tool.ruff]
 src = ["src"]
