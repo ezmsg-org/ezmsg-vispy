@@ -1,11 +1,17 @@
-from dataclasses import dataclass, field
-import logging
-from typing import Callable, Optional, Dict, Sequence
 import enum
-from PyQt6 import QtWidgets
+import logging
+from collections.abc import Sequence
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Callable
+from typing import Dict
+from typing import Optional
 
 import numpy as np
-from vispy import scene, color
+from qtpy import QtWidgets
+
+from vispy import color
+from vispy import scene
 
 from ..helpers.ranged_pan_zoom import RangedPanZoomCamera
 from .base_plot_widget import BasePlotWidget
@@ -105,10 +111,10 @@ class EditPolygon(scene.Polygon):
 
     def send_scale(self):
         if (
-                self.scale_cb is not None
-                and self.line is not None
-                and self.line.transform is not None
-            ):
+            self.scale_cb is not None
+            and self.line is not None
+            and self.line.transform is not None
+        ):
             self.scale_cb(1 / (2 * self.line.transform.scale[1]))
 
     @property
@@ -266,8 +272,8 @@ class MultiTraceWidget(BasePlotWidget):
         self.marker_widget = self.canvas_grid.add_view(row=2, col=5)
         self.marker_widget.camera = "panzoom"
         if not (
-                isinstance(self.marker_widget, scene.ViewBox)
-                and isinstance(self.marker_widget.camera, scene.PanZoomCamera)
+            isinstance(self.marker_widget, scene.ViewBox)
+            and isinstance(self.marker_widget.camera, scene.PanZoomCamera)
         ):
             raise ValueError("Marker Widget did not initialize correctly.")
         self.marker_widget.camera.flip = (True, False)

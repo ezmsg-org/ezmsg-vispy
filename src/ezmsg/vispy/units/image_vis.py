@@ -1,10 +1,16 @@
-import ezmsg.core as ez
-import numpy as np
-from typing import Any, Optional, Tuple, Union, Any
-from PyQt6 import QtCore
+from typing import Any
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
-from .plot_vis import PlotVisState, PlotVisSettings, PlotVis
+import numpy as np
+
+import ezmsg.core as ez
+
 from ..widgets.image_widget import ImageWidget
+from .plot_vis import PlotVis
+from .plot_vis import PlotVisSettings
+from .plot_vis import PlotVisState
 
 
 class ImageVisState(PlotVisState):

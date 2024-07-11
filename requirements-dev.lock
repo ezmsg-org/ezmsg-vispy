@@ -6,6 +6,8 @@
 #   features: []
 #   all-features: true
 #   with-sources: false
+#   generate-hashes: false
+#   universal: false
 
 -e file:.
 cfgv==3.4.0
@@ -37,17 +39,12 @@ platformdirs==4.2.0
 pre-commit==3.7.0
 pyopengl==3.1.7
     # via ezmsg-vispy
-pyqt6==6.6.1
-    # via ezmsg-vispy
-pyqt6-qt6==6.6.2
-    # via pyqt6
-pyqt6-sip==13.6.0
-    # via pyqt6
 pyyaml==6.0.1
     # via pre-commit
 qdarkstyle==3.2.3
     # via ezmsg-vispy
 qtpy==2.4.1
+    # via ezmsg-vispy
     # via qdarkstyle
 setuptools==69.2.0
     # via nodeenv

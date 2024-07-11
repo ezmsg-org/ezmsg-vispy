@@ -1,10 +1,14 @@
-import numpy as np
-from typing import Optional, Tuple, Union
-from vispy import scene, color
-from PyQt6 import QtCore
+from typing import Optional
+from typing import Tuple
+from typing import Union
 
-from .base_plot_widget import BasePlotWidget
+import numpy as np
+
+from vispy import color
+from vispy import scene
+
 from ..helpers.ranged_pan_zoom import RangedPanZoomCamera
+from .base_plot_widget import BasePlotWidget
 
 
 class ImageWidget(BasePlotWidget):

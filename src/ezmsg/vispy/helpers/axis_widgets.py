@@ -1,4 +1,5 @@
-from PyQt6 import QtWidgets, QtCore
+from qtpy import QtCore
+from qtpy import QtWidgets
 
 
 class YAxisWidget(QtWidgets.QWidget):
@@ -43,7 +44,7 @@ def create_ylabels(chs: list):
     layout.setContentsMargins(0, 0, 0, 0)
     for ch_num, val in enumerate(chs):
         if val == True:
-            ch_label = QtWidgets.QLabel("Channel {}".format(ch_num))
+            ch_label = QtWidgets.QLabel(f"Channel {ch_num}")
             ch_label.setSizePolicy(
                 QtWidgets.QSizePolicy.Policy.Preferred,
                 QtWidgets.QSizePolicy.Policy.Expanding,

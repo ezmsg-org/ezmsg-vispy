@@ -1,11 +1,14 @@
-import numpy as np
-from PyQt6 import QtWidgets
-from typing import Any, Dict, Optional, Tuple, Union
-from vispy import scene, color
+from typing import Tuple
+from typing import Union
 
-from .base_plot_widget import BasePlotWidget
-from ..visuals.bar_plot import BarPlot
+import numpy as np
+from qtpy import QtWidgets
+
+from vispy import color
+from vispy import scene
+
 from ..helpers.ranged_pan_zoom import RangedPanZoomCamera
+from .base_plot_widget import BasePlotWidget
 
 
 class BarPlotWidget(BasePlotWidget):

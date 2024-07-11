@@ -1,16 +1,19 @@
-import ezmsg.core as ez
-import numpy as np
-import time
 import asyncio
-import threading
-from dataclasses import asdict
-from typing import Any, Dict, Optional, Tuple, Union, List
-from PyQt6 import QtCore
-
-from .plot_vis import PlotVisState, PlotVisSettings, PlotVis
-from ..widgets.multi_line_widget import MultiLineWidget
-
 import logging
+import threading
+from typing import Any
+from typing import List
+from typing import Tuple
+from typing import Union
+
+import numpy as np
+
+import ezmsg.core as ez
+
+from ..widgets.multi_line_widget import MultiLineWidget
+from .plot_vis import PlotVis
+from .plot_vis import PlotVisSettings
+from .plot_vis import PlotVisState
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +101,7 @@ class MultiLineVis(PlotVis):
                 self.STATE.lock.release()
                 self.STATE._update = True
             else:
-                logger.warn(f"Received message did not have data attr!")
+                logger.warn("Received message did not have data attr!")
 
     def update(self):
         if self.STATE._update is True:

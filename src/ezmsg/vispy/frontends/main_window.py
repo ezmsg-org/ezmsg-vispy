@@ -1,20 +1,24 @@
 import logging
 import pickle
 import select
+from typing import Callable
+from typing import Dict
+from typing import Union
+
 import qdarkstyle
-from contextlib import contextmanager
-from PyQt6 import QtCore, QtWidgets
 from qdarkstyle.dark.palette import DarkPalette
 from qdarkstyle.light.palette import LightPalette
-from typing import Dict, Tuple, Union, Callable
+from qtpy import QtCore
+from qtpy import QtWidgets
 
-from ..helpers.constants import UINT64_SIZE, BYTEORDER
+from ..helpers.constants import BYTEORDER
+from ..helpers.constants import UINT64_SIZE
 
 # Silence logging for qdarkstyle package.
 logging.getLogger("qdarkstyle").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
-PYQT_SLOT = Union[Callable[..., None], QtCore.pyqtBoundSignal]
+PYQT_SLOT = Union[Callable[..., None], QtCore.Signal]
 
 
 def merge(a, b, path=None):
@@ -46,7 +50,7 @@ def register_command(func) -> Callable:
 def register_response(msg_type):
     def _register(func):
         registrations = {msg_type: [func]}
-        setattr(func, "callbacks", registrations)
+        func.callbacks = registrations
         return func
 
     return _register
@@ -74,7 +78,7 @@ class EzWindowMeta(type(QtWidgets.QMainWindow)):
 
 
 class EzMainWindow(QtWidgets.QMainWindow, metaclass=EzWindowMeta):
-    command_signal = QtCore.pyqtSignal(object)
+    command_signal = QtCore.Signal(object)
 
     def __init__(self, command_socket, response_socket):
         super().__init__()
@@ -129,7 +133,7 @@ class EzMainWindow(QtWidgets.QMainWindow, metaclass=EzWindowMeta):
         self.set_command_signal(obj)
         self.add_callbacks(obj)
 
-    @QtCore.pyqtSlot()
+    @QtCore.Slot()
     def _on_response(self):
         self.response_notification.setEnabled(False)
         while True:
@@ -150,7 +154,7 @@ class EzMainWindow(QtWidgets.QMainWindow, metaclass=EzWindowMeta):
                             callback(obj, msg)
         self.response_notification.setEnabled(True)
 
-    @QtCore.pyqtSlot(object)
+    @QtCore.Slot(object)
     def _on_command(self, msg):
         raw = pickle.dumps(msg)
         raw_size = len(raw).to_bytes(UINT64_SIZE, byteorder=BYTEORDER, signed=False)
