@@ -1,6 +1,5 @@
 from typing import Any
 from typing import Optional
-from typing import Tuple
 from typing import Union
 
 import numpy as np
@@ -22,8 +21,8 @@ class LineVisState(PlotVisState):
     _update: Bool to indicate if plot visual needs updating.
     """
 
-    data: np.ndarray = None
-    set_range: bool = False
+    data: Optional[np.ndarray] = None
+    set_range: Union[bool, tuple[tuple[int, int], tuple[int, int]]] = False
     _update: bool = False
 
 
@@ -33,8 +32,9 @@ class LineVisSettings(PlotVisSettings):
     """
 
     data_attr: Optional[str] = None
-    color: Union[Tuple, str] = (0.5, 0.5, 0.5, 1)
+    color: Union[tuple, str] = (0.5, 0.5, 0.5, 1)
     width: float = 1.0
+    use_axis_array_offset: bool = False
 
 
 class LineVis(PlotVis):
@@ -47,16 +47,18 @@ class LineVis(PlotVis):
     STATE: LineVisState
     SETTINGS: LineVisSettings
 
-    widget_type: type = LineWidget
+    widget_type = LineWidget
 
-    remove_attrs: list = PlotVis.remove_attrs + ["data_attr"]
+    remove_attrs: list = PlotVis.remove_attrs + ["data_attr", "use_axis_array_offset"]
 
     @ez.subscriber(INPUT)
     async def got_message(self, message: Any) -> None:
         if self.STATE.widget is not None:
             if issubclass(type(message), AxisArray):
                 axis = message.get_axis("time")
-                t = np.arange(message.shape[0]) * axis.gain + axis.offset
+                t = np.arange(message.shape[0]) * axis.gain
+                if self.SETTINGS.use_axis_array_offset is True:
+                    t += axis.offset
                 data = np.empty(shape=(t.shape[0], 2))
                 data[:, 0] = t
                 data[:, 1] = message.data
@@ -64,7 +66,9 @@ class LineVis(PlotVis):
                     self.STATE.set_range = True
                 self.STATE.data = data
                 self.STATE._update = True
-            elif hasattr(message, self.SETTINGS.data_attr):
+            elif self.SETTINGS.data_attr is not None and hasattr(
+                message, self.SETTINGS.data_attr
+            ):
                 # This contains plot data.
                 if self.STATE.data is None:
                     self.STATE.set_range = True
@@ -72,14 +76,21 @@ class LineVis(PlotVis):
                 self.STATE._update = True
 
     def update(self):
-        if self.STATE._update:
+        if self.STATE._update and self.STATE.data is not None:
             self.STATE.widget.visual.set_data(
                 self.STATE.data,
             )
-            if self.STATE.set_range:
-                self.STATE.widget.view.camera.set_range(
-                    (min(self.STATE.data[:, 0]), max(self.STATE.data[:, 0])),
-                    (min(self.STATE.data[:, 1]), max(self.STATE.data[:, 1])),
-                )
+            if isinstance(self.STATE.set_range, bool):
+                if self.STATE.set_range:
+                    self.STATE.widget.view.camera.set_range(
+                        (min(self.STATE.data[:, 0]), max(self.STATE.data[:, 0])),
+                        (min(self.STATE.data[:, 1]), max(self.STATE.data[:, 1])),
+                    )
+                    self.STATE.set_range = False
+            elif isinstance(self.STATE.set_range, tuple) or isinstance(
+                self.STATE.set_range, list
+            ):
+                self.STATE.widget.view.camera.set_range(*self.STATE.set_range)
                 self.STATE.set_range = False
+
             self.STATE._update = False
