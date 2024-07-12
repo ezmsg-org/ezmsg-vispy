@@ -22,7 +22,7 @@ class LineVisState(PlotVisState):
     """
 
     data: Optional[np.ndarray] = None
-    set_range: Union[bool, tuple[tuple[int, int], tuple[int, int]]] = False
+    set_range: bool = False
     _update: bool = False
 
 
@@ -49,7 +49,10 @@ class LineVis(PlotVis):
 
     widget_type = LineWidget
 
-    remove_attrs: list = PlotVis.remove_attrs + ["data_attr", "use_axis_array_offset"]
+    remove_attrs: list = PlotVis.remove_attrs + [
+        "data_attr",
+        "use_axis_array_offset",
+    ]
 
     @ez.subscriber(INPUT)
     async def got_message(self, message: Any) -> None:
@@ -80,17 +83,11 @@ class LineVis(PlotVis):
             self.STATE.widget.visual.set_data(
                 self.STATE.data,
             )
-            if isinstance(self.STATE.set_range, bool):
-                if self.STATE.set_range:
-                    self.STATE.widget.view.camera.set_range(
-                        (min(self.STATE.data[:, 0]), max(self.STATE.data[:, 0])),
-                        (min(self.STATE.data[:, 1]), max(self.STATE.data[:, 1])),
-                    )
-                    self.STATE.set_range = False
-            elif isinstance(self.STATE.set_range, tuple) or isinstance(
-                self.STATE.set_range, list
-            ):
-                self.STATE.widget.view.camera.set_range(*self.STATE.set_range)
+            if self.STATE.set_range:
+                self.STATE.widget.view.camera.set_range(
+                    (min(self.STATE.data[:, 0]), max(self.STATE.data[:, 0])),
+                    (min(self.STATE.data[:, 1]), max(self.STATE.data[:, 1])),
+                )
                 self.STATE.set_range = False
 
             self.STATE._update = False
