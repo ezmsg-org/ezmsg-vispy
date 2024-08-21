@@ -1,21 +1,27 @@
-import ezmsg.core as ez
-import numpy as np
-from typing import Optional, Tuple, Union, Any
+from typing import Any
+from typing import Optional
+from typing import Union
 
-from .plot_vis import PlotVisState, PlotVisSettings, PlotVis
+import numpy as np
+
+import ezmsg.core as ez
+
 from ..widgets.complex_image_widget import ComplexImageWidget
+from .plot_vis import PlotVis
+from .plot_vis import PlotVisSettings
+from .plot_vis import PlotVisState
 
 
 class ComplexImageVisState(PlotVisState):
     data: np.ndarray = None
-    clim: Optional[Union[Tuple[float, float], str]] = "auto"
+    clim: Optional[Union[tuple[float, float], str]] = "auto"
     cmap: Optional[str] = "grays"
     _update: bool = False
 
 
 class ComplexImageVisSettings(PlotVisSettings):
     data_attr: str = None
-    clim: Union[Tuple[float, float], str] = "auto"
+    clim: Union[tuple[float, float], str] = "auto"
     cmap: str = "grays"
     aspect: float = None
 

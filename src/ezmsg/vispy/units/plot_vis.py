@@ -2,7 +2,6 @@ import asyncio
 from dataclasses import asdict
 from dataclasses import field
 from typing import Any
-from typing import List
 from typing import Optional
 
 from qtpy import QtCore
@@ -45,7 +44,7 @@ class PlotVis(ez.Unit):
     EVS_OUTPUT = ez.OutputStream(Any)
 
     widget_type: type
-    remove_attrs: List[str] = ["external_timer"]
+    remove_attrs: list[str] = ["external_timer"]
 
     def build(self) -> QtWidgets.QWidget:
         kwargs = asdict(self.SETTINGS)

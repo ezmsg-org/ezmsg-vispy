@@ -6,8 +6,6 @@ import socket
 from collections.abc import AsyncGenerator
 from dataclasses import field
 from typing import Any
-from typing import Dict
-from typing import List
 from typing import Optional
 
 from qtpy import QtCore
@@ -46,7 +44,7 @@ class SimpleApplication(ez.Unit):
     SETTINGS: SimpleApplicationSettings
     STATE: SimpleApplicationState
 
-    visuals: List[ez.Unit]
+    visuals: list[ez.Unit]
 
     def initialize(self):
         self.STATE.app = None
@@ -127,7 +125,7 @@ class Application(ez.Unit):
     SETTINGS: ApplicationSettings
     STATE: ApplicationState
 
-    visuals: Dict[str, PlotVis]
+    visuals: dict[str, PlotVis]
 
     def initialize(self) -> None:
         self.STATE.app = None

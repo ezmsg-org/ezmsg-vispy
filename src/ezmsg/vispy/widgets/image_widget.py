@@ -1,5 +1,4 @@
 from typing import Optional
-from typing import Tuple
 from typing import Union
 
 import numpy as np
@@ -52,7 +51,7 @@ class ImageWidget(BasePlotWidget):
     def update(
         self,
         data: Optional[np.ndarray] = None,
-        clim: Optional[Union[Tuple[float, float], str]] = None,
+        clim: Optional[Union[tuple[float, float], str]] = None,
         cmap: Optional[Union[str, color.Colormap]] = None,
     ):
         if data is not None:

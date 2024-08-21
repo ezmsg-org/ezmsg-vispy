@@ -2,8 +2,6 @@ import asyncio
 import logging
 import threading
 from typing import Any
-from typing import List
-from typing import Tuple
 from typing import Union
 
 import numpy as np
@@ -31,8 +29,8 @@ class MultiLineVisState(PlotVisState):
     lock: threading.Lock = None
     _update: bool = False
     _configured: bool = False
-    ch_mins: List[float] = None
-    ch_maxs: List[float] = None
+    ch_mins: list[float] = None
+    ch_maxs: list[float] = None
 
 
 class MultiLineVisSettings(PlotVisSettings):
@@ -42,7 +40,7 @@ class MultiLineVisSettings(PlotVisSettings):
 
     data_attr: str = None
     fs_attr: str = None
-    color: Union[Tuple, str] = (0.5, 0.5, 0.5, 1)
+    color: Union[tuple, str] = (0.5, 0.5, 0.5, 1)
     width: float = 1.0
     window_length: float = 30.0  # in seconds
     channel_offset: float = 10.0

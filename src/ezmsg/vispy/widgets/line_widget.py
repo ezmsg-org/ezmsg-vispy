@@ -1,4 +1,5 @@
 from vispy import scene
+
 from .base_plot_widget import BasePlotWidget
 
 

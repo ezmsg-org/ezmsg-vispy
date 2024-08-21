@@ -1,5 +1,4 @@
 from typing import Optional
-from typing import Tuple
 from typing import Union
 
 import numpy as np
@@ -80,7 +79,7 @@ class SpectrogramWidget(BasePlotWidget):
     def update(
         self,
         data: Optional[np.ndarray] = None,
-        clim: Optional[Union[Tuple[float, float], str]] = None,
+        clim: Optional[Union[tuple[float, float], str]] = None,
         cmap: Optional[str] = None,
     ):
         """

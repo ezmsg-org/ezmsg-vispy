@@ -1,7 +1,8 @@
 from vispy import scene
 
-from .base_plot_widget import BasePlotWidget
 from ..helpers.ranged_pan_zoom import RangedPanZoomCamera
+from .base_plot_widget import BasePlotWidget
+
 
 class LinePlotWidget(BasePlotWidget):
     """Plot a series of data using lines and markers

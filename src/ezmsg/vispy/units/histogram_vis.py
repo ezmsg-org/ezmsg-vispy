@@ -1,11 +1,16 @@
-import ezmsg.core as ez
-import numpy as np
-from ezmsg.util.messages.axisarray import AxisArray
-from typing import List, Optional, Any
 from dataclasses import dataclass
+from typing import Any
+from typing import Optional
 
-from .plot_vis import PlotVisState, PlotVisSettings, PlotVis
+import numpy as np
+
+import ezmsg.core as ez
+from ezmsg.util.messages.axisarray import AxisArray
+
 from ..widgets.histogram_widget import HistogramWidget
+from .plot_vis import PlotVis
+from .plot_vis import PlotVisSettings
+from .plot_vis import PlotVisState
 
 
 @dataclass
@@ -35,7 +40,7 @@ class HistogramVis(PlotVis):
 
     widget_type: type = HistogramWidget
 
-    remove_attrs: List[str] = PlotVis.remove_attrs + ["data_attr", "bins_attr"]
+    remove_attrs: list[str] = PlotVis.remove_attrs + ["data_attr", "bins_attr"]
 
     @ez.subscriber(INPUT)
     async def got_message(self, message: Any) -> None:

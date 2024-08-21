@@ -1,15 +1,23 @@
-import ezmsg.core as ez
-import numpy as np
 import asyncio
+import logging
 import threading
-from dataclasses import asdict, field, dataclass
-from typing import Dict, Optional, Tuple, Sequence, Union
+from collections.abc import Sequence
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Optional
+from typing import Union
+
+import numpy as np
+
+import ezmsg.core as ez
 from ezmsg.util.messages.axisarray import AxisArray
 
-from .plot_vis import PlotVisState, PlotVisSettings, PlotVis
-from ..widgets.multitrace_widget import MultiTraceData, MultiTraceMode, MultiTraceWidget
-
-import logging
+from ..widgets.multitrace_widget import MultiTraceData
+from ..widgets.multitrace_widget import MultiTraceMode
+from ..widgets.multitrace_widget import MultiTraceWidget
+from .plot_vis import PlotVis
+from .plot_vis import PlotVisSettings
+from .plot_vis import PlotVisState
 
 logger = logging.getLogger(__name__)
 
@@ -27,13 +35,13 @@ class MultiTraceMessage:
 class MultiTraceVisState(PlotVisState):
     loop: asyncio.AbstractEventLoop
     lock: threading.Lock
-    trace_map: Dict[str, Tuple[bool, MultiTraceData]] = field(default_factory=dict)
+    trace_map: dict[str, tuple[bool, MultiTraceData]] = field(default_factory=dict)
     _update: bool = False
 
 
 class MultiTraceVisSettings(PlotVisSettings):
     mode: MultiTraceMode = MultiTraceMode.SET
-    trace_colors: Dict[str, set] = field(default_factory=dict)
+    trace_colors: dict[str, set] = field(default_factory=dict)
     gridlines_en: bool = True
     axis: str = "time"
 
