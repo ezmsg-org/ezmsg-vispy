@@ -127,9 +127,8 @@ class MultiLineWidget(BasePlotWidget):
         self.update_y_axes()
 
     def update_y_axes(self):
-        get_val = (
-            lambda ch: (self.seg_offset / 2) / self.magnify_chain.transforms[ch].mag
-        )
+        def get_val(ch):
+            return self.seg_offset / 2 / self.magnify_chain.transforms[ch].mag
         out = [round(get_val(ch) * 1e6, 3) for ch in range(self.num_segments)]
         for idx, val in enumerate(out):
             ax = self.yaxis.layout().itemAt(idx).widget()
@@ -171,10 +170,10 @@ class MultiLineWidget(BasePlotWidget):
     def configure_segments(
         self, window_length, fs, channel_offset, num_segments=None, ch_selection=None
     ):
-        if num_segments == None and ch_selection == None:
+        if num_segments is None and ch_selection is None:
             raise "Must pass either number of waveforms or the currect channel selection!"
 
-        if ch_selection != None:
+        if ch_selection is not None:
             self.ch_selection = ch_selection
         else:
             # Start by displaying all channels, user may deselect individual channels later.

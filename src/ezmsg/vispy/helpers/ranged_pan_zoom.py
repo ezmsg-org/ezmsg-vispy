@@ -1,9 +1,10 @@
+import logging
 from typing import Optional
-from vispy import scene
-from vispy.geometry import Rect
+
 import numpy as np
 
-import logging
+from vispy import scene
+from vispy.geometry import Rect
 
 logger = logging.getLogger(__name__)
 
@@ -66,9 +67,9 @@ class RangedPanZoomCamera(scene.PanZoomCamera):
         else:
             rect = Rect(args)
 
-        if self._limits != None:
+        if self._limits is not None:
             new_area = rect.height * rect.width
-            if self._rect != None:
+            if self._rect is not None:
                 current_area = self.rect.height * self.rect.width
             else:
                 current_area = new_area
@@ -106,7 +107,7 @@ class RangedPanZoomCamera(scene.PanZoomCamera):
         """
         if len(pan) == 1:
             pan = pan[0]
-        if self._vert_pan == False:
+        if self._vert_pan is False:
             pan[1] = 0.0
         self.rect = self.rect + pan
 
@@ -139,12 +140,12 @@ class RangedPanZoomCamera(scene.PanZoomCamera):
         # trigger view_changed:
         rect = Rect(self.rect)
         # Get space from given center to edges and scale these spaces
-        if self._vert_zoom == True or override == True:
+        if self._vert_zoom is True or override is True:
             bottom_space = center[1] - rect.bottom
             rect.bottom = center[1] - bottom_space * scale[1]
             top_space = rect.top - center[1]
             rect.top = center[1] + top_space * scale[1]
-        if self._horz_zoom == True or override == True:
+        if self._horz_zoom is True or override is True:
             left_space = center[0] - rect.left
             rect.left = center[0] - left_space * scale[0]
             right_space = rect.right - center[0]
@@ -169,21 +170,19 @@ class RangedPanZoomCamera(scene.PanZoomCamera):
                 return
 
             modifiers = event.mouse_event.modifiers
-            p1 = event.mouse_event.press_event.pos
-            p2 = event.mouse_event.pos
 
             if 2 in event.buttons and not modifiers:
                 # Zoom
                 p1c = np.array(event.last_event.pos)[:2]
                 p2c = np.array(event.pos)[:2]
-                if self._vert_zoom == False:
+                if self._vert_zoom is False:
                     p1c[0] = 0
                     p2c[0] = 0
-                    if self._vert_center == True:
+                    if self._vert_center is True:
                         center = self._transform.imap(event.press_event.pos[:2])
                     else:
                         center = self._rect.center
-                elif self._horz_zoom == False:
+                elif self._horz_zoom is False:
                     p1c[1] = 0
                     p2c[1] = 0
                     center = self._transform.imap(event.press_event.pos[:2])
@@ -200,7 +199,7 @@ class RangedPanZoomCamera(scene.PanZoomCamera):
         super().viewbox_mouse_event(event)
 
     def move_to_edge(self, val: float, side: Optional[str] = None):
-        if side == None:
+        if side is None:
             assert "Must provide left,right to align camera"
         rect = Rect(self.rect)
         width = rect.width

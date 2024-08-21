@@ -1,13 +1,15 @@
+from typing import Optional
+
 import numpy as np
+
 from vispy import scene
-from typing import Tuple, Optional
 
 from .base_plot_widget import BasePlotWidget
 
 
 class HistogramWidget(BasePlotWidget):
-    x_range: Optional[Tuple[float, float]]
-    y_range: Optional[Tuple[float, float]]
+    x_range: Optional[tuple[float, float]]
+    y_range: Optional[tuple[float, float]]
 
     def __init__(self, color="w", orientation="h", *args, **kwargs):
         super().__init__(*args, **kwargs)

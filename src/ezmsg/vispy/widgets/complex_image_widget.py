@@ -1,9 +1,12 @@
+from typing import Optional
+from typing import Union
+
 import numpy as np
-from typing import Tuple, Union, Optional
+
 from vispy import scene
 
-from .base_plot_widget import BasePlotWidget
 from ..helpers.ranged_pan_zoom import RangedPanZoomCamera
+from .base_plot_widget import BasePlotWidget
 
 
 class ComplexImageWidget(BasePlotWidget):
@@ -47,7 +50,7 @@ class ComplexImageWidget(BasePlotWidget):
     def update(
         self,
         data: Optional[np.ndarray] = None,
-        clim: Optional[Union[Tuple[float, float], str]] = None,
+        clim: Optional[Union[tuple[float, float], str]] = None,
         cmap: Optional[str] = None,
         complex_mode: Optional[str] = None,
     ):

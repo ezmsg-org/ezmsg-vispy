@@ -1,8 +1,9 @@
-import ezmsg.core as ez
 import enum
+from typing import Optional
+from typing import Union
+
+import ezmsg.core as ez
 from vispy import color as vispy_color
-from typing import Optional, Dict, Tuple, Union
-from dataclasses import dataclass
 
 
 class PlotType(enum.Enum):
@@ -26,7 +27,7 @@ class HistogramSettings(PlotSettings):
 
 class ImageSettings(PlotSettings):
     cmap: str = "cubehelix"
-    clim: Union[str, Tuple] = "auto"
+    clim: Union[str, tuple] = "auto"
     fg_color: Optional[vispy_color.Color] = None
 
 
@@ -68,11 +69,11 @@ class SpectrogramSettings(PlotSettings):
     normalize: bool = False
     color_scale: str = "log"
     cmap: str = "cubehelix"
-    clim: Union[str, Tuple] = "auto"
+    clim: Union[str, tuple] = "auto"
 
 
 class VolumeSettings(PlotSettings):
-    clim: Tuple[float, float] = None
+    clim: tuple[float, float] = None
     method: str = "mip"
     threshold: float = None
     cmap: str = "grays"
@@ -91,4 +92,4 @@ class RollingSpectrogramSettings(PlotSettings):
     normalize: bool = False
     color_scale: str = "log"
     cmap: str = "cubehelix"
-    clim: Union[str, Tuple] = "auto"
+    clim: Union[str, tuple] = "auto"

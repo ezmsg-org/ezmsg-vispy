@@ -1,7 +1,7 @@
+import logging
+
 from vispy.color import Color
 from vispy.util import set_log_level
-
-import logging
 
 logger = logging.getLogger(__name__)
 

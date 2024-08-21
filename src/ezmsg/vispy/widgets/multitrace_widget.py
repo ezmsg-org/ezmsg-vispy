@@ -4,7 +4,6 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from dataclasses import field
 from typing import Callable
-from typing import Dict
 from typing import Optional
 
 import numpy as np
@@ -236,10 +235,12 @@ class MultiTraceWidget(BasePlotWidget):
     def __init__(
         self,
         mode: MultiTraceMode = MultiTraceMode.SET,
-        trace_colors: Dict[str, list] = dict(),
+        trace_colors: dict[str, list] = None,
         *args,
         **kwargs,
     ):
+        if trace_colors is None:
+            trace_colors = dict()
         super().__init__(*args, **kwargs)
 
         self.mode = mode
@@ -250,7 +251,7 @@ class MultiTraceWidget(BasePlotWidget):
         ]
         self.trace_colors["inuse"] = list()
         # trace_map will contain the source string as key and config info as val.
-        self.trace_map: Dict[str, TraceInfo] = dict()
+        self.trace_map: dict[str, TraceInfo] = dict()
 
         self.selected_object = None
         self.x_arr = None

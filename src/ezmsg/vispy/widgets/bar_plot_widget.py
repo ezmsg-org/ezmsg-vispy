@@ -1,4 +1,3 @@
-from typing import Tuple
 from typing import Union
 
 import numpy as np
@@ -30,7 +29,7 @@ class BarPlotWidget(BasePlotWidget):
     def update(
         self,
         data: np.ndarray = None,
-        clim: Union[Tuple[float, float], str] = None,
+        clim: Union[tuple[float, float], str] = None,
         cmap: str = None,
     ):
         if type(data) == np.ndarray:
@@ -44,7 +43,7 @@ class BarPlotWidget(BasePlotWidget):
         if type(cmap) == str:
             self._image.cmap = cmap
         self.canvas.update()
-        if self._clim_auto == True:
+        if self._clim_auto is True:
             self._image.clim = "auto"
 
     def check_update_viewbox(self, new_data):

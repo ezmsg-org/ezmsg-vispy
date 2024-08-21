@@ -2,7 +2,6 @@ import logging
 import pickle
 import select
 from typing import Callable
-from typing import Dict
 from typing import Union
 
 import qdarkstyle
@@ -33,7 +32,7 @@ def merge(a, b, path=None):
             elif isinstance(a[key], list) and isinstance(b[key], list):
                 a[key] = a[key] + b[key]
             else:
-                raise Exception("Conflict at %s" % ".".join(path + [str(key)]))
+                raise Exception("Conflict at {}".format(".".join(path + [str(key)])))
         else:
             a[key] = b[key]
     return a
@@ -101,14 +100,10 @@ class EzMainWindow(QtWidgets.QMainWindow, metaclass=EzWindowMeta):
         self.command_signal.connect(self._on_command)
 
     def set_dark_theme(self):
-        self.setStyleSheet(
-            qdarkstyle.load_stylesheet(qt_api="pyqt6", palette=DarkPalette)
-        )
+        self.setStyleSheet(qdarkstyle.load_stylesheet(palette=DarkPalette))
 
     def set_light_theme(self):
-        self.setStyleSheet(
-            qdarkstyle.load_stylesheet(qt_api="pyqt6", palette=LightPalette)
-        )
+        self.setStyleSheet(qdarkstyle.load_stylesheet(palette=LightPalette))
 
     def add_callbacks(self, obj):
         for attr_name in dir(obj):
@@ -145,7 +140,10 @@ class EzMainWindow(QtWidgets.QMainWindow, metaclass=EzWindowMeta):
                 raw_size = int.from_bytes(
                     raw_size_bytes, byteorder=BYTEORDER, signed=False
                 )
-                raw = sock.recv(raw_size)
+                raw = b""
+                while len(raw) < raw_size:
+                    bytes_to_read = min(raw_size - len(raw), 4096)
+                    raw += sock.recv(bytes_to_read)
                 msg = pickle.loads(raw)
                 for registry in self._callbacks.get(type(msg), list()):
                     obj, callbacks = registry
@@ -166,7 +164,7 @@ class EzMainWindow(QtWidgets.QMainWindow, metaclass=EzWindowMeta):
                 if callable(callback):
                     callback(obj, msg)
 
-    def add_visual_widgets(self, visuals: Dict[str, QtWidgets.QWidget]):
+    def add_visual_widgets(self, visuals: dict[str, QtWidgets.QWidget]):
         # Attach visuals to widgets in MainWindow
         for ui_name, visual_widget in visuals.items():
             try:

@@ -43,7 +43,7 @@ def create_ylabels(chs: list):
     layout.setSpacing(0)
     layout.setContentsMargins(0, 0, 0, 0)
     for ch_num, val in enumerate(chs):
-        if val == True:
+        if val is True:
             ch_label = QtWidgets.QLabel(f"Channel {ch_num}")
             ch_label.setSizePolicy(
                 QtWidgets.QSizePolicy.Policy.Preferred,
@@ -60,8 +60,8 @@ def create_yaxes(chs, units):
     layout = QtWidgets.QVBoxLayout()
     layout.setSpacing(0)
     layout.setContentsMargins(0, 0, 0, 0)
-    for ch_num, val in enumerate(chs):
-        if val == True:
+    for _ch_num, val in enumerate(chs):
+        if val is True:
             y_axis = YAxisWidget(units)
             layout.addWidget(y_axis)
             layout.setStretch(i, 10)

@@ -1,6 +1,5 @@
 from typing import Any
 from typing import Optional
-from typing import Tuple
 from typing import Union
 
 import numpy as np
@@ -15,14 +14,14 @@ from .plot_vis import PlotVisState
 
 class ImageVisState(PlotVisState):
     data: np.ndarray = None
-    clim: Optional[Union[Tuple[float, float], str]] = "auto"
+    clim: Optional[Union[tuple[float, float], str]] = "auto"
     cmap: Optional[str] = "grays"
     _update: bool = False
 
 
 class ImageVisSettings(PlotVisSettings):
     data_attr: str = None
-    clim: Union[Tuple[float, float], str] = "auto"
+    clim: Union[tuple[float, float], str] = "auto"
     cmap: str = "grays"
     aspect: float = None
 

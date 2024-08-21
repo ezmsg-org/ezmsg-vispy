@@ -1,7 +1,5 @@
 import logging
-import sys
 from dataclasses import dataclass
-from pathlib import Path
 
 from qtpy import QtGui
 from qtpy import QtWidgets
