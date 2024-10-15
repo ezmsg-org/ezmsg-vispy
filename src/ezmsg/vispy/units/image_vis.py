@@ -29,8 +29,8 @@ class ImageVisSettings(PlotVisSettings):
 class ImageVis(PlotVis):
     INPUT = ez.InputStream(Any)
 
-    STATE: ImageVisState
-    SETTINGS: ImageVisSettings
+    STATE = ImageVisState
+    SETTINGS = ImageVisSettings
 
     widget_type: type = ImageWidget
 

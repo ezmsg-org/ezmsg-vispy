@@ -27,8 +27,8 @@ class ImageState(ez.State):
 
 
 class ImageGenerator(ez.Unit):
-    SETTINGS: ImageSettings
-    STATE: ImageState
+    SETTINGS = ImageSettings
+    STATE = ImageState
 
     OUTPUT = ez.OutputStream(ImageMessage)
 

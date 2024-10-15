@@ -1,29 +1,28 @@
-import numpy as np
 import logging
 import time
-from typing import AsyncGenerator, List, Any
+from collections.abc import AsyncGenerator
 from dataclasses import field
+from typing import Any
+
+import numpy as np
 
 # Module specific imports
 import ezmsg.core as ez
 from ezmsg.util.rate import Rate
-
+from ezmsg.vispy.units.application import SimpleApplication
+from ezmsg.vispy.units.application import SimpleApplicationSettings
+from ezmsg.vispy.units.multitrace_vis import MultiTraceMessage
+from ezmsg.vispy.units.multitrace_vis import MultiTraceVis
+from ezmsg.vispy.units.multitrace_vis import MultiTraceVisSettings
 from ezmsg.vispy.widgets.multitrace_widget import MultiTraceMode
-from ezmsg.vispy.units.application import SimpleApplication, SimpleApplicationSettings
-from ezmsg.vispy.units.multitrace_vis import (
-    MultiTraceVis,
-    MultiTraceVisSettings,
-    MultiTraceMessage,
-)
-
-import logging
 
 logger = logging.getLogger(__name__)
+
 
 # MESSAGE GENERATOR
 class MultiWaveformSettings(ez.Settings):
     fs: float = 300.0  # sampling rate
-    fsig: List[float] = field(
+    fsig: list[float] = field(
         default_factory=lambda: [1.0, 5.0, 10.0]
     )  # signal frequency
     refresh_rate: float = 60.0
@@ -32,15 +31,14 @@ class MultiWaveformSettings(ez.Settings):
 
 
 class MultiWaveformState(ez.State):
-    fsig: List[float] = None
+    fsig: list[float] = None
     t: np.ndarray = None
     y: np.ndarray = None
 
 
 class MultiWaveformGenerator(ez.Unit):
-
-    SETTINGS: MultiWaveformSettings
-    STATE: MultiWaveformState
+    SETTINGS = MultiWaveformSettings
+    STATE = MultiWaveformState
 
     TS_OUTPUT = ez.OutputStream(MultiTraceMessage)
 
@@ -59,13 +57,23 @@ class MultiWaveformGenerator(ez.Unit):
         while True:
             sample = np.sin(2 * np.pi * self.STATE.fsig * time.time())[:, np.newaxis]
 
-            yield self.TS_OUTPUT, MultiTraceMessage(
-                fs=self.SETTINGS.fs, data=sample.T, trace_name=self.SETTINGS.trace_name
+            yield (
+                self.TS_OUTPUT,
+                MultiTraceMessage(
+                    fs=self.SETTINGS.fs,
+                    data=sample.T,
+                    trace_name=self.SETTINGS.trace_name,
+                ),
             )
             await rate.sleep()
 
     def update_waveform(self):
-        self.STATE.y = np.empty(shape=(len(self.SETTINGS.fsig), len(self.STATE.t),))
+        self.STATE.y = np.empty(
+            shape=(
+                len(self.SETTINGS.fsig),
+                len(self.STATE.t),
+            )
+        )
         for idx, f in enumerate(self.SETTINGS.fsig):
             self.STATE.y[idx] = np.sin(2 * np.pi * f * self.STATE.t)
 
@@ -85,7 +93,9 @@ class MultiTraceApp(ez.Collection):
         # Configure plots
         self.MULTI_PLOT.apply_settings(
             MultiTraceVisSettings(
-                mode=MultiTraceMode.ROLL, external_timer=True, xax_en=True,
+                mode=MultiTraceMode.ROLL,
+                external_timer=True,
+                xax_en=True,
             )
         )
 
@@ -110,14 +120,12 @@ class MultiTraceApp(ez.Collection):
 
 
 class MultiTraceVisDemo(ez.Collection):
-
     MULTI_GENERATOR = MultiWaveformGenerator()
     MULTI_GENERATOR2 = MultiWaveformGenerator()
 
     MULTI_APP = MultiTraceApp()
 
     def configure(self) -> None:
-
         self.MULTI_GENERATOR.apply_settings(
             MultiWaveformSettings(trace_name="source 1")
         )

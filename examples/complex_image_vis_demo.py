@@ -1,13 +1,15 @@
-import numpy as np
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 from dataclasses import dataclass
+
+import numpy as np
 
 # Module specific imports
 import ezmsg.core as ez
 from ezmsg.util.rate import Rate
-
-from ezmsg.vispy.units.application import SimpleApplication, SimpleApplicationSettings
-from ezmsg.vispy.units.complex_image_vis import ComplexImageVis, ComplexImageVisSettings
+from ezmsg.vispy.units.application import SimpleApplication
+from ezmsg.vispy.units.application import SimpleApplicationSettings
+from ezmsg.vispy.units.complex_image_vis import ComplexImageVis
+from ezmsg.vispy.units.complex_image_vis import ComplexImageVisSettings
 
 
 @dataclass
@@ -26,9 +28,8 @@ class ComplexImageState(ez.State):
 
 
 class ComplexImageGenerator(ez.Unit):
-
-    SETTINGS: ComplexImageSettings
-    STATE: ComplexImageState
+    SETTINGS = ComplexImageSettings
+    STATE = ComplexImageState
 
     OUTPUT = ez.OutputStream(ComplexImageMessage)
 
@@ -89,13 +90,11 @@ class ComplexImageApp(ez.Collection):
 
 
 class ComplexImageVisDemo(ez.Collection):
-
     IMAGE_GENERATOR = ComplexImageGenerator()
 
     IMAGE_APP = ComplexImageApp()
 
     def configure(self) -> None:
-
         self.IMAGE_GENERATOR.apply_settings(
             ComplexImageSettings(
                 fs=1e2,

@@ -35,8 +35,8 @@ class HistogramVisState(PlotVisState):
 class HistogramVis(PlotVis):
     INPUT = ez.InputStream(Any)
 
-    STATE: HistogramVisState
-    SETTINGS: HistogramVisSettings
+    STATE = HistogramVisState
+    SETTINGS = HistogramVisSettings
 
     widget_type: type = HistogramWidget
 

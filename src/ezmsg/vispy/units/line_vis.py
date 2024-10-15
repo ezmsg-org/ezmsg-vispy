@@ -44,8 +44,8 @@ class LineVis(PlotVis):
 
     INPUT = ez.InputStream(Any)
 
-    STATE: LineVisState
-    SETTINGS: LineVisSettings
+    STATE = LineVisState
+    SETTINGS = LineVisSettings
 
     widget_type = LineWidget
 
