@@ -51,8 +51,8 @@ class MultiLineVisSettings(PlotVisSettings):
 class MultiLineVis(PlotVis):
     INPUT = ez.InputStream(Any)
 
-    STATE: MultiLineVisState
-    SETTINGS: MultiLineVisSettings
+    STATE = MultiLineVisState
+    SETTINGS = MultiLineVisSettings
 
     widget_type: type = MultiLineWidget
 

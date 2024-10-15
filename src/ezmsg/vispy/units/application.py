@@ -41,8 +41,8 @@ class SimpleApplication(ez.Unit):
     Creates a pyqt application with a window + visuals
     """
 
-    SETTINGS: SimpleApplicationSettings
-    STATE: SimpleApplicationState
+    SETTINGS = SimpleApplicationSettings
+    STATE = SimpleApplicationState
 
     visuals: list[ez.Unit]
 
@@ -122,8 +122,8 @@ class Application(ez.Unit):
     INPUT = ez.InputStream(Any)
     OUTPUT = ez.OutputStream(Any)
 
-    SETTINGS: ApplicationSettings
-    STATE: ApplicationState
+    SETTINGS = ApplicationSettings
+    STATE = ApplicationState
 
     visuals: dict[str, PlotVis]
 

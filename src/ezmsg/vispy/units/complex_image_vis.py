@@ -29,8 +29,8 @@ class ComplexImageVisSettings(PlotVisSettings):
 class ComplexImageVis(PlotVis):
     INPUT = ez.InputStream(Any)
 
-    STATE: ComplexImageVisState
-    SETTINGS: ComplexImageVisSettings
+    STATE = ComplexImageVisState
+    SETTINGS = ComplexImageVisSettings
 
     widget_type: type = ComplexImageWidget
 

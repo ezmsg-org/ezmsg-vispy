@@ -1,15 +1,20 @@
-import numpy as np
-import logging
 import asyncio
+import logging
+from collections.abc import AsyncGenerator
 from dataclasses import dataclass
-from typing import AsyncGenerator, Any
+from typing import Any
+
+import numpy as np
+from frontends.line_vis_frontend import LineVisFrontend
+from frontends.line_vis_frontend import WaveformCfgMessage
 
 # Module specific imports
 import ezmsg.core as ez
 from ezmsg.util.rate import Rate
-from ezmsg.vispy.units.application import Application, ApplicationSettings
-from ezmsg.vispy.units.line_vis import LineVisSettings, LineVis
-from frontends.line_vis_frontend import LineVisFrontend, WaveformCfgMessage
+from ezmsg.vispy.units.application import Application
+from ezmsg.vispy.units.application import ApplicationSettings
+from ezmsg.vispy.units.line_vis import LineVis
+from ezmsg.vispy.units.line_vis import LineVisSettings
 
 logger = logging.getLogger(__name__)
 
@@ -51,8 +56,8 @@ class WaveformState(ez.State):
 
 
 class WaveformGenerator(ez.Unit):
-    SETTINGS: WaveformSettings
-    STATE: WaveformState
+    SETTINGS = WaveformSettings
+    STATE = WaveformState
 
     CFG_COMMAND = ez.InputStream(WaveformCfgMessage)
     CFG_RESPONSE = ez.OutputStream(WaveformCfgMessage)

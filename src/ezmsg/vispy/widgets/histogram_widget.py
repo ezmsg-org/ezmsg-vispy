@@ -22,7 +22,6 @@ class HistogramWidget(BasePlotWidget):
         self.x_range = None
         self.y_range = None
 
-
     def update(self, data, bin_edges):
         if self.orientation == "v":
             X, Y = (0, 1)

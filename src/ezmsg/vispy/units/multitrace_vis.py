@@ -49,8 +49,8 @@ class MultiTraceVisSettings(PlotVisSettings):
 class MultiTraceVis(PlotVis):
     INPUT = ez.InputStream(MultiTraceMessage)
 
-    STATE: MultiTraceVisState
-    SETTINGS: MultiTraceVisSettings
+    STATE = MultiTraceVisState
+    SETTINGS = MultiTraceVisSettings
 
     widget_type: type = MultiTraceWidget
     remove_attrs: list = PlotVis.remove_attrs + ["axis"]
@@ -88,7 +88,9 @@ class MultiTraceVis(PlotVis):
                 or trace.ch_names != ch_names
                 or trace.fs != fs
                 or (
-                    trace.x_arr is not None and x_arr is not None and trace.x_arr.shape != x_arr.shape
+                    trace.x_arr is not None
+                    and x_arr is not None
+                    and trace.x_arr.shape != x_arr.shape
                 )
             ):
                 trace = MultiTraceData(data, fs, x_arr, trace_name, ch_names, units)

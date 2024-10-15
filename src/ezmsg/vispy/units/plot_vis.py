@@ -38,8 +38,8 @@ class PlotVisState(ez.State):
 
 
 class PlotVis(ez.Unit):
-    SETTINGS: PlotVisSettings
-    STATE: PlotVisState
+    SETTINGS = PlotVisSettings
+    STATE = PlotVisState
 
     EVS_OUTPUT = ez.OutputStream(Any)
 

@@ -1,12 +1,18 @@
 import time
-import ezmsg.core as ez
-import numpy as np
-from typing import AsyncGenerator, List, Any
-from dataclasses import field, dataclass
-from ezmsg.util.rate import Rate
-from ezmsg.vispy.units.histogram_vis import HistogramVis, HistogramVisSettings
-from ezmsg.vispy.units.application import SimpleApplication, SimpleApplicationSettings
+from collections.abc import AsyncGenerator
+from dataclasses import dataclass
+from dataclasses import field
 from itertools import cycle
+from typing import Any
+
+import numpy as np
+
+import ezmsg.core as ez
+from ezmsg.util.rate import Rate
+from ezmsg.vispy.units.application import SimpleApplication
+from ezmsg.vispy.units.application import SimpleApplicationSettings
+from ezmsg.vispy.units.histogram_vis import HistogramVis
+from ezmsg.vispy.units.histogram_vis import HistogramVisSettings
 
 
 @dataclass
@@ -16,7 +22,7 @@ class HistogramMessage:
 
 
 class DataGeneratorSettings(ez.Settings):
-    noise_freqs: List[float] = field(default_factory=lambda: [1.0, 50.0, 100.0])
+    noise_freqs: list[float] = field(default_factory=lambda: [1.0, 50.0, 100.0])
     refresh_rate: float = 30.0
     noise_interval: float = 2.5
 
@@ -28,8 +34,8 @@ class DataGeneratorState(ez.State):
 
 
 class DataGenerator(ez.Unit):
-    SETTINGS: DataGeneratorSettings
-    STATE: DataGeneratorState
+    SETTINGS = DataGeneratorSettings
+    STATE = DataGeneratorState
 
     OUTPUT = ez.OutputStream(Any)
 
@@ -65,7 +71,7 @@ class HistogramAppSettings(ez.Settings):
 
 
 class HistogramApp(ez.Collection):
-    SETTINGS: HistogramAppSettings
+    SETTINGS = HistogramAppSettings
 
     INPUT = ez.InputStream(Any)
 
@@ -102,7 +108,6 @@ class HistogramApp(ez.Collection):
 
 
 class HistogramDemo(ez.Collection):
-
     HISTOGRAM_PLOT = HistogramApp()
     HISTOGRAM_DATA = DataGenerator()
 

@@ -9,7 +9,7 @@ TIMER_INTERVAL = 33
 UINT64_SIZE = 8
 BYTEORDER = "little"
 
-### ROI COLOR DEFINITIONS -> START
+# ROI COLOR DEFINITIONS -> START
 old_verbose, _ = set_log_level("error", return_old=True)
 old_verbose = logging._levelToName.get(old_verbose)
 
@@ -183,4 +183,4 @@ LINE_16 = [border_16, fill_16]
 LINE_COLORS.append(LINE_16)
 
 set_log_level(old_verbose)
-### ROI COLOR DEFINITIONS -> END
+# ROI COLOR DEFINITIONS -> END
