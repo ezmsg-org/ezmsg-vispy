@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 from typing import Optional
 
@@ -27,7 +27,7 @@ class HistogramVisSettings(PlotVisSettings):
 
 
 class HistogramVisState(PlotVisState):
-    data: np.ndarray = np.array([])
+    data: np.ndarray = field(default_factory=lambda: np.array([]))
     bins: Optional[int] = None
     _update: bool = False
 
